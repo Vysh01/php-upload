@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiple File Upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Multiple File Upload</h2>
+    <input type="file" id="fileInput" multiple><br/>
+    <button id="uploadButton" style="margin-top: 10px;">Upload</button>
+    <div id="status"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#uploadButton').click(function() {
+                var files = $('#fileInput')[0].files;
+                var formData = new FormData();
+
+                // Append each file to the FormData object
+                for (var i = 0; i < files.length; i++) {
+                    formData.append('files[]', files[i]);
+                }
+
+                // Send the AJAX request
+                $.ajax({
+                    url: 'uploadmultiple.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        $('#status').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

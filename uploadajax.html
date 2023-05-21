@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload Form</title>
+</head>
+<body>
+    <form id="file-upload-form" enctype="multipart/form-data">
+        <input type="file" name="file" id="file-input"><br/>
+        <input type="submit" value="AJAX Upload" style="margin-top: 10px;">
+    </form>
+</body>
+</html>
+<script>
+document.getElementById("file-upload-form").addEventListener("submit", function(e) {
+  e.preventDefault(); // Prevent form submission
+  uploadFile();
+});
+function uploadFile() {
+  var fileInput = document.getElementById("file-input");
+  var file = fileInput.files[0];
+  var formData = new FormData();
+  formData.append("file", file);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "upload.php", true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // File uploaded successfully
+      console.log(xhr.responseText);
+      alert(xhr.responseText)
+    }
+  };
+  xhr.send(formData);
+}
+
+</script>
